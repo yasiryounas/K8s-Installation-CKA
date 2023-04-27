@@ -10,4 +10,5 @@ firewall-cmd --permanent --add-port=10250/tcp --zone=internal
 firewall-cmd --permanent --add-port=10259/tcp --zone=internal
 firewall-cmd --permanent --add-port=10257/tcp --zone=internal
 firewall-cmd --permanent --add-port=6783/tcp --zone=internal
+firewall-cmd --permanent --add-service=dns --zone=public
 firewall-cmd --reload
