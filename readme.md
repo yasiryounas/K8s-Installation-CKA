@@ -14,3 +14,10 @@ check the logs of Weave net pods,
 kubectl logs podname -n kube-system -c weave
 
 kubectl exec -n kube-system podname -c weave -- /home/weave/weave --local status
+
+if there is any issue after the VM, connection to API server is refused.
+then perform following steps,
+sudo swapoff -a
+sudo systemctl daemon-reload
+sudo systemctl restart containerd
+sudo systemctl restart kubelet 
