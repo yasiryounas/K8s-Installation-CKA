@@ -21,3 +21,9 @@ sudo swapoff -a
 sudo systemctl daemon-reload
 sudo systemctl restart containerd
 sudo systemctl restart kubelet 
+
+For firewall verification, check the firewall status 
+sudo systemctl status firewalld.service 
+sudo firewall-cmd --list-all
+sudo firewall-cmd --set-default-zone=internal
+
