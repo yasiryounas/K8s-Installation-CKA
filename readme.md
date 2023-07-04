@@ -27,3 +27,6 @@ sudo systemctl status firewalld.service
 sudo firewall-cmd --list-all
 sudo firewall-cmd --set-default-zone=internal
 
+For coredns issue,
+sudo firewall-cmd --add-masquerade --permanent
+sudo firewall-cmd --reload
