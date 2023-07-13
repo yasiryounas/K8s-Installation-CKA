@@ -1,3 +1,5 @@
+sudo cat /sys/class/dmi/id/product_uuid
+
 lsmod | grep br_netfilter
 lsmod | grep overlay
 
