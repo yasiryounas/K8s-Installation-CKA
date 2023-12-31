@@ -1,3 +1,4 @@
+#!/bin/sh
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
@@ -16,8 +17,8 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 
-sudo yum update
-sudo yum install containerd -y
+sudo apt update
+sudo apt install containerd -y
 
 sudo mkdir -p /etc/containerd
 containerd config default | sudo tee /etc/containerd/config.toml
