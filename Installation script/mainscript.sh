@@ -1,5 +1,6 @@
-
-sudo kubeadm init --apiserver-advertise-address 192.168.60.11 --control-plane-endpoint 192.168.60.11 --pod-network-cidr=192.168.0.0/16
+##Update the IP Address according to Your Master Host IP
+IP= 192.168.60.11
+sudo kubeadm init --apiserver-advertise-address $IP --control-plane-endpoint $IP --pod-network-cidr=192.168.0.0/16
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
