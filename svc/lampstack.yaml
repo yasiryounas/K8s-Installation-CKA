@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: php-config
+data:
+  php.ini: |
+    variables_order = "EGPCS"
+
+---
+
+apiVersion: v1
+data:
+  MYSQL_DATABASE: bGFtcGRi
+  MYSQL_HOST: bXlzcWwtc2VydmljZQ==
+  MYSQL_PASSWORD: bWpvbG5pcjEyMw==
+  MYSQL_ROOT_PASSWORD: cGFzd2Q=
+  MYSQL_USER: dGhvcg==
+kind: Secret
+metadata:
+  name: mysql-config
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lamp-wp
+  name: lamp-wp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lamp-wp
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: lamp-wp
+    spec:
+      volumes:
+      - name: ini
+        configMap:
+          name: php-config
+          items:            #<- This extra syntax to make subPath work properly
+          - key: php.ini
+            path: php.ini
+      containers:
+      - image: webdevops/php-apache:alpine-3-php7
+        name: httpd-php-container
+        env: &environment               #<- ANCHOR
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-config
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-config
+              key: MYSQL_DATABASE
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-config
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-config
+              key: MYSQL_PASSWORD
+        - name: MYSQL_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mysql-config
+              key: MYSQL_HOST
+        volumeMounts:
+        - name: ini
+          mountPath: /opt/docker/etc/php/php.ini
+          subPath: php.ini
+      - image: mysql:5.6
+        name: mysql-container
+        env: *environment 
