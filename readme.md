@@ -30,3 +30,8 @@ sudo firewall-cmd --set-default-zone=internal
 For coredns issue,
 sudo firewall-cmd --add-masquerade --permanent
 sudo firewall-cmd --reload
+
+
+to install nginx controller
+
+https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.3/deploy/static/provider/cloud/deploy.yaml
